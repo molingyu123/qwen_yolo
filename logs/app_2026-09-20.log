@@ -1,0 +1,836 @@
+2026-09-20 09:00:02.536 | INFO     | app.main:lifespan:66 - ===== qwen-filter-service v1.0.0 启动 =====
+2026-09-20 09:00:02.537 | INFO     | app.main:lifespan:69 - 监听地址: 127.0.0.1:8080
+2026-09-20 09:00:02.537 | INFO     | app.main:lifespan:70 - API Key 校验: 开启
+2026-09-20 09:00:02.537 | INFO     | app.main:lifespan:73 - IP 白名单: 127.0.0.1,::1
+2026-09-20 09:00:02.679 | INFO     | app.qwen_client:startup:35 - QwenClient 初始化: http://127.0.0.1:9080/v1
+2026-09-20 09:00:16.907 | WARNING  | app.qwen_client:health_check:47 - vLLM 健康检查失败: All connection attempts failed
+2026-09-20 09:03:53.169 | INFO     | app.main:lifespan:76 - ===== 应用关闭 =====
+2026-09-20 09:03:53.170 | INFO     | app.qwen_client:shutdown:40 - QwenClient 已关闭
+2026-09-20 15:41:13.306 | WARNING  | app.main:dispatch:45 - 拒绝非白名单 IP: testclient 访问 /api/v1/detect
+2026-09-20 15:41:23.559 | INFO     | app.routes:detect_image:174 - [033202b1e57c] 整图识别请求, url=False
+2026-09-20 15:41:23.573 | ERROR    | app.main:global_handler:93 - 未捕获异常: 'Settings' object has no attribute 'qwen_top_p'
+  + Exception Group Traceback (most recent call last):
+  |
+  |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+  |     yield
+  |
+  |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 190, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |                │     │                      └ <anyio._backends._asyncio.TaskGroup object at 0x00000258E29166E0>
+  |                │     └ <function create_task_group at 0x00000258E08A3880>
+  |                └ <module 'anyio' from 'F:\\anaconda3\\envs\\python310\\lib\\site-packages\\anyio\\__init__.py'>
+  |
+  |   File "F:\anaconda3\envs\python310\lib\site-packages\anyio\_backends\_asyncio.py", line 799, in __aexit__
+  |     raise BaseExceptionGroup(
+  |           └ <class 'exceptiongroup.BaseExceptionGroup'>
+  |
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |           │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x00000258E293F9A0>
+    |           │    │   │      └ <function _TestClientTransport.handle_request.<locals>.receive at 0x00000258BF103D90>
+    |           │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │    └ <app.main.SecurityMiddleware object at 0x00000258E2917700>
+    |           └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x00000258E2917760>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 189, in __call__
+    |     with collapse_excgroups():
+    |          └ <function collapse_excgroups at 0x00000258E1D8E680>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\contextlib.py", line 153, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |     │    │   │     │    │      └ <traceback object at 0x00000258E2956F40>
+    |     │    │   │     │    └ ExceptionGroup('unhandled errors in a TaskGroup', [AttributeError("'Settings' object has no attribute 'qwen_top_p'")])
+    |     │    │   │     └ <class 'exceptiongroup.ExceptionGroup'>
+    |     │    │   └ <method 'throw' of 'generator' objects>
+    |     │    └ <generator object collapse_excgroups at 0x00000258E291A0A0>
+    |     └ <contextlib._GeneratorContextManager object at 0x00000258E29166B0>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_utils.py", line 93, in collapse_excgroups
+    |     raise exc
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                      │    │             │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next at 0x00000258E293FA30>
+    |                      │    │             └ <starlette.middleware.base._CachedRequest object at 0x00000258E29165F0>
+    |                      │    └ <bound method SecurityMiddleware.dispatch of <app.main.SecurityMiddleware object at 0x00000258E2917700>>
+    |                      └ <app.main.SecurityMiddleware object at 0x00000258E2917700>
+    |
+    |   File "D:\pythonPorjects\qwen_filter\app\main.py", line 54, in dispatch
+    |     return await call_next(request)
+    |                  │         └ <starlette.middleware.base._CachedRequest object at 0x00000258E29165F0>
+    |                  └ <function BaseHTTPMiddleware.__call__.<locals>.call_next at 0x00000258E293FA30>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 165, in call_next
+    |     raise app_exc
+    |           └ AttributeError("'Settings' object has no attribute 'qwen_top_p'")
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 151, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |           │    │   │      │                      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x00000258E293FBE0>
+    |           │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+    |           │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │    └ <starlette.middleware.cors.CORSMiddleware object at 0x00000258E2916E60>
+    |           └ <app.main.SecurityMiddleware object at 0x00000258E2917700>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    |     await self.app(scope, receive, send)
+    |           │    │   │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x00000258E293FBE0>
+    |           │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+    |           │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x00000258E2916B90>
+    |           └ <starlette.middleware.cors.CORSMiddleware object at 0x00000258E2916E60>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\exceptions.py", line 65, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |           │                            │    │    │     │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x00000258E293FBE0>
+    |           │                            │    │    │     │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+    |           │                            │    │    │     └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │                            │    │    └ <starlette.requests.Request object at 0x00000258E29583A0>
+    |           │                            │    └ <fastapi.routing.APIRouter object at 0x00000258E285E080>
+    |           │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x00000258E2916B90>
+    |           └ <function wrap_app_handling_exceptions at 0x00000258E1F75240>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    |     raise exc
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     await app(scope, receive, sender)
+    |           │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E293FEB0>
+    |           │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+    |           │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           └ <fastapi.routing.APIRouter object at 0x00000258E285E080>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 756, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |           │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E293FEB0>
+    |           │    │                │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+    |           │    │                └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x00000258E285E080>>
+    |           └ <fastapi.routing.APIRouter object at 0x00000258E285E080>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 776, in app
+    |     await route.handle(scope, receive, send)
+    |           │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E293FEB0>
+    |           │     │      │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+    |           │     │      └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │     └ <function Route.handle at 0x00000258E1F768C0>
+    |           └ APIRoute(path='/api/v1/detect', name='detect_image', methods=['POST'])
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 297, in handle
+    |     await self.app(scope, receive, send)
+    |           │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E293FEB0>
+    |           │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+    |           │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │    └ <function request_response.<locals>.app at 0x00000258E28BB520>
+    |           └ APIRoute(path='/api/v1/detect', name='detect_image', methods=['POST'])
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 77, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |           │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E293FEB0>
+    |           │                            │    │        │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+    |           │                            │    │        └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │                            │    └ <starlette.requests.Request object at 0x00000258E29585E0>
+    |           │                            └ <function request_response.<locals>.app.<locals>.app at 0x00000258E2960040>
+    |           └ <function wrap_app_handling_exceptions at 0x00000258E1F75240>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    |     raise exc
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     await app(scope, receive, sender)
+    |           │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E29600D0>
+    |           │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+    |           │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           └ <function request_response.<locals>.app.<locals>.app at 0x00000258E2960040>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 72, in app
+    |     response = await func(request)
+    |                      │    └ <starlette.requests.Request object at 0x00000258E29585E0>
+    |                      └ <function get_request_handler.<locals>.app at 0x00000258E28BB490>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\fastapi\routing.py", line 301, in app
+    |     raw_response = await run_endpoint_function(
+    |                          └ <function run_endpoint_function at 0x00000258E1F8C430>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |                  │         │      └ {'req': DetectRequest(image_url=None, image_base64='/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofH...
+    |                  │         └ <function detect_image at 0x00000258E28B8F70>
+    |                  └ Dependant(path_params=[], query_params=[], header_params=[], cookie_params=[], body_params=[ModelField(field_info=Body(Pydant...
+    |
+    |   File "D:\pythonPorjects\qwen_filter\app\routes.py", line 192, in detect_image
+    |     detections, reason = await qwen_client.detect_image(
+    |                                │           └ <function QwenClient.detect_image at 0x00000258E28337F0>
+    |                                └ <app.qwen_client.QwenClient object at 0x00000258E28169E0>
+    |
+    |   File "D:\pythonPorjects\qwen_filter\app\qwen_client.py", line 162, in detect_image
+    |     "top_p": settings.qwen_top_p,
+    |              └ Settings(app_name='qwen-filter-service', app_version='1.0.0', host='0.0.0.0', port=9070, debug=False, allow_ips='', qwen_base...
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\pydantic\main.py", line 856, in __getattr__
+    |     raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+    |
+    | AttributeError: 'Settings' object has no attribute 'qwen_top_p'
+    +------------------------------------
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "F:\anaconda3\envs\python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000258BF55EB00>
+    └ <Thread(asyncio-portal-258e2914b20, started daemon 6952)>
+
+  File "F:\anaconda3\envs\python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000258BF55E830>
+    └ <Thread(asyncio-portal-258e2914b20, started daemon 6952)>
+
+  File "F:\anaconda3\envs\python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(asyncio-portal-258e2914b20, started daemon 6952)>
+    │    │        │    └ ()
+    │    │        └ <Thread(asyncio-portal-258e2914b20, started daemon 6952)>
+    │    └ <function start_blocking_portal.<locals>.run_blocking_portal at 0x00000258E28BB2E0>
+    └ <Thread(asyncio-portal-258e2914b20, started daemon 6952)>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\anyio\from_thread.py", line 532, in run_blocking_portal
+    run_eventloop(
+    └ <function run at 0x00000258E08D4670>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\anyio\_core\_eventloop.py", line 77, in run
+    return async_backend.run(func, args, {}, backend_options)
+           │             │   │     │         └ {}
+           │             │   │     └ ()
+           │             │   └ <function start_blocking_portal.<locals>.run_portal at 0x00000258E28BB400>
+           │             └ <classmethod(<function AsyncIOBackend.run at 0x00000258E293DEA0>)>
+           └ <class 'anyio._backends._asyncio.AsyncIOBackend'>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\anyio\_backends\_asyncio.py", line 2358, in run
+    return runner.run(wrapper())
+           │      │   └ <function start_blocking_portal.<locals>.run_portal at 0x00000258E28BB0A0>
+           │      └ <function Runner.run at 0x00000258E28BBC70>
+           └ <anyio._backends._asyncio.Runner object at 0x00000258E28C3520>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\anyio\_backends\_asyncio.py", line 214, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='anyio.from_thread.start_blocking_portal.<locals>.run_portal' coro=<start_blocking_portal.<locals>.run_por...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x00000258DFBC8550>
+           │    └ <ProactorEventLoop running=True closed=False debug=False>
+           └ <anyio._backends._asyncio.Runner object at 0x00000258E28C3520>
+
+  File "F:\anaconda3\envs\python310\lib\asyncio\base_events.py", line 636, in run_until_complete
+    self.run_forever()
+    │    └ <function ProactorEventLoop.run_forever at 0x00000258DFC1A9E0>
+    └ <ProactorEventLoop running=True closed=False debug=False>
+
+  File "F:\anaconda3\envs\python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+
+  File "F:\anaconda3\envs\python310\lib\asyncio\base_events.py", line 603, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x00000258DFBC9FC0>
+    └ <ProactorEventLoop running=True closed=False debug=False>
+
+  File "F:\anaconda3\envs\python310\lib\asyncio\base_events.py", line 1909, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x00000258DFB35990>
+    └ <Handle Task.task_wakeup(<Future cancelled>)>
+
+  File "F:\anaconda3\envs\python310\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle Task.task_wakeup(<Future cancelled>)>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle Task.task_wakeup(<Future cancelled>)>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle Task.task_wakeup(<Future cancelled>)>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\anyio\from_thread.py", line 259, in _call_func
+    retval = await retval_or_awaitable
+                   └ <coroutine object FastAPI.__call__ at 0x00000258E2918D60>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <function _TestClientTransport.handle_request.<locals>.send at 0x00000258E28BB370>
+                           │      └ <function _TestClientTransport.handle_request.<locals>.receive at 0x00000258BF103D90>
+                           └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function _TestClientTransport.handle_request.<locals>.send at 0x00000258E28BB370>
+          │    │                │      └ <function _TestClientTransport.handle_request.<locals>.receive at 0x00000258BF103D90>
+          │    │                └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x00000258E2917760>
+          └ <fastapi.applications.FastAPI object at 0x00000258E07AAFB0>
+
+> File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+          │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x00000258E293F9A0>
+          │    │   │      └ <function _TestClientTransport.handle_request.<locals>.receive at 0x00000258BF103D90>
+          │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <app.main.SecurityMiddleware object at 0x00000258E2917700>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x00000258E2917760>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 189, in __call__
+    with collapse_excgroups():
+         └ <function collapse_excgroups at 0x00000258E1D8E680>
+
+  File "F:\anaconda3\envs\python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+    │    │   │     │    │      └ <traceback object at 0x00000258E2956F40>
+    │    │   │     │    └ ExceptionGroup('unhandled errors in a TaskGroup', [AttributeError("'Settings' object has no attribute 'qwen_top_p'")])
+    │    │   │     └ <class 'exceptiongroup.ExceptionGroup'>
+    │    │   └ <method 'throw' of 'generator' objects>
+    │    └ <generator object collapse_excgroups at 0x00000258E291A0A0>
+    └ <contextlib._GeneratorContextManager object at 0x00000258E29166B0>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_utils.py", line 93, in collapse_excgroups
+    raise exc
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+                     │    │             │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next at 0x00000258E293FA30>
+                     │    │             └ <starlette.middleware.base._CachedRequest object at 0x00000258E29165F0>
+                     │    └ <bound method SecurityMiddleware.dispatch of <app.main.SecurityMiddleware object at 0x00000258E2917700>>
+                     └ <app.main.SecurityMiddleware object at 0x00000258E2917700>
+
+  File "D:\pythonPorjects\qwen_filter\app\main.py", line 54, in dispatch
+    return await call_next(request)
+                 │         └ <starlette.middleware.base._CachedRequest object at 0x00000258E29165F0>
+                 └ <function BaseHTTPMiddleware.__call__.<locals>.call_next at 0x00000258E293FA30>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 165, in call_next
+    raise app_exc
+          └ AttributeError("'Settings' object has no attribute 'qwen_top_p'")
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+          │    │   │      │                      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x00000258E293FBE0>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+          │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x00000258E2916E60>
+          └ <app.main.SecurityMiddleware object at 0x00000258E2917700>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x00000258E293FBE0>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+          │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x00000258E2916B90>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x00000258E2916E60>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\exceptions.py", line 65, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+          │                            │    │    │     │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x00000258E293FBE0>
+          │                            │    │    │     │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+          │                            │    │    │     └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │                            │    │    └ <starlette.requests.Request object at 0x00000258E29583A0>
+          │                            │    └ <fastapi.routing.APIRouter object at 0x00000258E285E080>
+          │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x00000258E2916B90>
+          └ <function wrap_app_handling_exceptions at 0x00000258E1F75240>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E293FEB0>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+          │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          └ <fastapi.routing.APIRouter object at 0x00000258E285E080>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 756, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E293FEB0>
+          │    │                │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+          │    │                └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x00000258E285E080>>
+          └ <fastapi.routing.APIRouter object at 0x00000258E285E080>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 776, in app
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E293FEB0>
+          │     │      │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+          │     │      └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │     └ <function Route.handle at 0x00000258E1F768C0>
+          └ APIRoute(path='/api/v1/detect', name='detect_image', methods=['POST'])
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 297, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E293FEB0>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+          │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <function request_response.<locals>.app at 0x00000258E28BB520>
+          └ APIRoute(path='/api/v1/detect', name='detect_image', methods=['POST'])
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 77, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+          │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E293FEB0>
+          │                            │    │        │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+          │                            │    │        └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │                            │    └ <starlette.requests.Request object at 0x00000258E29585E0>
+          │                            └ <function request_response.<locals>.app.<locals>.app at 0x00000258E2960040>
+          └ <function wrap_app_handling_exceptions at 0x00000258E1F75240>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x00000258E29600D0>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x00000258E293FAC0>
+          │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          └ <function request_response.<locals>.app.<locals>.app at 0x00000258E2960040>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 72, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x00000258E29585E0>
+                     └ <function get_request_handler.<locals>.app at 0x00000258E28BB490>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x00000258E1F8C430>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'req': DetectRequest(image_url=None, image_base64='/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofH...
+                 │         └ <function detect_image at 0x00000258E28B8F70>
+                 └ Dependant(path_params=[], query_params=[], header_params=[], cookie_params=[], body_params=[ModelField(field_info=Body(Pydant...
+
+  File "D:\pythonPorjects\qwen_filter\app\routes.py", line 192, in detect_image
+    detections, reason = await qwen_client.detect_image(
+                               │           └ <function QwenClient.detect_image at 0x00000258E28337F0>
+                               └ <app.qwen_client.QwenClient object at 0x00000258E28169E0>
+
+  File "D:\pythonPorjects\qwen_filter\app\qwen_client.py", line 162, in detect_image
+    "top_p": settings.qwen_top_p,
+             └ Settings(app_name='qwen-filter-service', app_version='1.0.0', host='0.0.0.0', port=9070, debug=False, allow_ips='', qwen_base...
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\pydantic\main.py", line 856, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+
+AttributeError: 'Settings' object has no attribute 'qwen_top_p'
+2026-09-20 15:41:39.891 | INFO     | app.routes:detect_image:174 - [2c203a0fd0fc] 整图识别请求, url=False
+2026-09-20 15:41:39.892 | ERROR    | app.qwen_client:detect_image:186 - vLLM 识别异常 (第 1 次): 'NoneType' object has no attribute 'post'
+2026-09-20 15:41:40.401 | ERROR    | app.qwen_client:detect_image:186 - vLLM 识别异常 (第 2 次): 'NoneType' object has no attribute 'post'
+2026-09-20 15:41:41.413 | ERROR    | app.qwen_client:detect_image:186 - vLLM 识别异常 (第 3 次): 'NoneType' object has no attribute 'post'
+2026-09-20 15:41:41.413 | ERROR    | app.qwen_client:detect_image:191 - vLLM 识别最终失败，返回空结果: 'NoneType' object has no attribute 'post'
+2026-09-20 15:41:41.414 | INFO     | app.routes:detect_image:197 - [2c203a0fd0fc] 识别到 0 个目标
+2026-09-20 15:41:41.417 | ERROR    | app.main:global_handler:93 - 未捕获异常: _save_annotated() got an unexpected keyword argument 'fmt'
+  + Exception Group Traceback (most recent call last):
+  |
+  |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_utils.py", line 87, in collapse_excgroups
+  |     yield
+  |
+  |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 190, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |                │     │                      └ <anyio._backends._asyncio.TaskGroup object at 0x000001FF18044070>
+  |                │     └ <function create_task_group at 0x000001FF15FD79A0>
+  |                └ <module 'anyio' from 'F:\\anaconda3\\envs\\python310\\lib\\site-packages\\anyio\\__init__.py'>
+  |
+  |   File "F:\anaconda3\envs\python310\lib\site-packages\anyio\_backends\_asyncio.py", line 799, in __aexit__
+  |     raise BaseExceptionGroup(
+  |           └ <class 'exceptiongroup.BaseExceptionGroup'>
+  |
+  | exceptiongroup.ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |           │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x000001FF1802FAC0>
+    |           │    │   │      └ <function _TestClientTransport.handle_request.<locals>.receive at 0x000001FF74753D90>
+    |           │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │    └ <app.main.SecurityMiddleware object at 0x000001FF18006D10>
+    |           └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x000001FF18006D70>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 189, in __call__
+    |     with collapse_excgroups():
+    |          └ <function collapse_excgroups at 0x000001FF175FE7A0>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\contextlib.py", line 153, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |     │    │   │     │    │      └ <traceback object at 0x000001FF1804C080>
+    |     │    │   │     │    └ ExceptionGroup('unhandled errors in a TaskGroup', [TypeError("_save_annotated() got an unexpected keyword argument 'fmt'")])
+    |     │    │   │     └ <class 'exceptiongroup.ExceptionGroup'>
+    |     │    │   └ <method 'throw' of 'generator' objects>
+    |     │    └ <generator object collapse_excgroups at 0x000001FF1800A0A0>
+    |     └ <contextlib._GeneratorContextManager object at 0x000001FF18044040>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_utils.py", line 93, in collapse_excgroups
+    |     raise exc
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                      │    │             │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next at 0x000001FF1802FB50>
+    |                      │    │             └ <starlette.middleware.base._CachedRequest object at 0x000001FF18007940>
+    |                      │    └ <bound method SecurityMiddleware.dispatch of <app.main.SecurityMiddleware object at 0x000001FF18006D10>>
+    |                      └ <app.main.SecurityMiddleware object at 0x000001FF18006D10>
+    |
+    |   File "D:\pythonPorjects\qwen_filter\app\main.py", line 54, in dispatch
+    |     return await call_next(request)
+    |                  │         └ <starlette.middleware.base._CachedRequest object at 0x000001FF18007940>
+    |                  └ <function BaseHTTPMiddleware.__call__.<locals>.call_next at 0x000001FF1802FB50>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 165, in call_next
+    |     raise app_exc
+    |           └ TypeError("_save_annotated() got an unexpected keyword argument 'fmt'")
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 151, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |           │    │   │      │                      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x000001FF1802FD00>
+    |           │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+    |           │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │    └ <starlette.middleware.cors.CORSMiddleware object at 0x000001FF18006AD0>
+    |           └ <app.main.SecurityMiddleware object at 0x000001FF18006D10>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    |     await self.app(scope, receive, send)
+    |           │    │   │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x000001FF1802FD00>
+    |           │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+    |           │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x000001FF18006A10>
+    |           └ <starlette.middleware.cors.CORSMiddleware object at 0x000001FF18006AD0>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\exceptions.py", line 65, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |           │                            │    │    │     │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x000001FF1802FD00>
+    |           │                            │    │    │     │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+    |           │                            │    │    │     └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │                            │    │    └ <starlette.requests.Request object at 0x000001FF18044640>
+    |           │                            │    └ <fastapi.routing.APIRouter object at 0x000001FF17F48F40>
+    |           │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x000001FF18006A10>
+    |           └ <function wrap_app_handling_exceptions at 0x000001FF17685360>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    |     raise exc
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     await app(scope, receive, sender)
+    |           │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF18050040>
+    |           │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+    |           │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           └ <fastapi.routing.APIRouter object at 0x000001FF17F48F40>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 756, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |           │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF18050040>
+    |           │    │                │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+    |           │    │                └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x000001FF17F48F40>>
+    |           └ <fastapi.routing.APIRouter object at 0x000001FF17F48F40>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 776, in app
+    |     await route.handle(scope, receive, send)
+    |           │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF18050040>
+    |           │     │      │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+    |           │     │      └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │     └ <function Route.handle at 0x000001FF176869E0>
+    |           └ APIRoute(path='/api/v1/detect', name='detect_image', methods=['POST'])
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 297, in handle
+    |     await self.app(scope, receive, send)
+    |           │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF18050040>
+    |           │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+    |           │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │    └ <function request_response.<locals>.app at 0x000001FF17FAF640>
+    |           └ APIRoute(path='/api/v1/detect', name='detect_image', methods=['POST'])
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 77, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |           │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF18050040>
+    |           │                            │    │        │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+    |           │                            │    │        └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           │                            │    └ <starlette.requests.Request object at 0x000001FF18044880>
+    |           │                            └ <function request_response.<locals>.app.<locals>.app at 0x000001FF18050160>
+    |           └ <function wrap_app_handling_exceptions at 0x000001FF17685360>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    |     raise exc
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     await app(scope, receive, sender)
+    |           │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF180501F0>
+    |           │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+    |           │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+    |           └ <function request_response.<locals>.app.<locals>.app at 0x000001FF18050160>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 72, in app
+    |     response = await func(request)
+    |                      │    └ <starlette.requests.Request object at 0x000001FF18044880>
+    |                      └ <function get_request_handler.<locals>.app at 0x000001FF17FAF5B0>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\fastapi\routing.py", line 301, in app
+    |     raw_response = await run_endpoint_function(
+    |                          └ <function run_endpoint_function at 0x000001FF1769C550>
+    |
+    |   File "F:\anaconda3\envs\python310\lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |                  │         │      └ {'req': DetectRequest(image_url=None, image_base64='/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofH...
+    |                  │         └ <function detect_image at 0x000001FF17FAD090>
+    |                  └ Dependant(path_params=[], query_params=[], header_params=[], cookie_params=[], body_params=[ModelField(field_info=Body(Pydant...
+    |
+    |   File "D:\pythonPorjects\qwen_filter\app\routes.py", line 213, in detect_image
+    |     fname, _ = _save_annotated(
+    |                └ <function _save_annotated at 0x000001FF17FAD120>
+    |
+    | TypeError: _save_annotated() got an unexpected keyword argument 'fmt'
+    +------------------------------------
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "F:\anaconda3\envs\python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001FF74C0EB00>
+    └ <Thread(asyncio-portal-1ff18004dc0, started daemon 16004)>
+
+  File "F:\anaconda3\envs\python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x000001FF74C0E830>
+    └ <Thread(asyncio-portal-1ff18004dc0, started daemon 16004)>
+
+  File "F:\anaconda3\envs\python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(asyncio-portal-1ff18004dc0, started daemon 16004)>
+    │    │        │    └ ()
+    │    │        └ <Thread(asyncio-portal-1ff18004dc0, started daemon 16004)>
+    │    └ <function start_blocking_portal.<locals>.run_blocking_portal at 0x000001FF17FAF400>
+    └ <Thread(asyncio-portal-1ff18004dc0, started daemon 16004)>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\anyio\from_thread.py", line 532, in run_blocking_portal
+    run_eventloop(
+    └ <function run at 0x000001FF16004790>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\anyio\_core\_eventloop.py", line 77, in run
+    return async_backend.run(func, args, {}, backend_options)
+           │             │   │     │         └ {}
+           │             │   │     └ ()
+           │             │   └ <function start_blocking_portal.<locals>.run_portal at 0x000001FF17FAF520>
+           │             └ <classmethod(<function AsyncIOBackend.run at 0x000001FF1802DFC0>)>
+           └ <class 'anyio._backends._asyncio.AsyncIOBackend'>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\anyio\_backends\_asyncio.py", line 2358, in run
+    return runner.run(wrapper())
+           │      │   └ <function start_blocking_portal.<locals>.run_portal at 0x000001FF17FAF1C0>
+           │      └ <function Runner.run at 0x000001FF17FAFD90>
+           └ <anyio._backends._asyncio.Runner object at 0x000001FF17FBB7C0>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\anyio\_backends\_asyncio.py", line 214, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='anyio.from_thread.start_blocking_portal.<locals>.run_portal' coro=<start_blocking_portal.<locals>.run_por...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x000001FF7FEA8550>
+           │    └ <ProactorEventLoop running=True closed=False debug=False>
+           └ <anyio._backends._asyncio.Runner object at 0x000001FF17FBB7C0>
+
+  File "F:\anaconda3\envs\python310\lib\asyncio\base_events.py", line 636, in run_until_complete
+    self.run_forever()
+    │    └ <function ProactorEventLoop.run_forever at 0x000001FF7FEFA9E0>
+    └ <ProactorEventLoop running=True closed=False debug=False>
+
+  File "F:\anaconda3\envs\python310\lib\asyncio\windows_events.py", line 321, in run_forever
+    super().run_forever()
+
+  File "F:\anaconda3\envs\python310\lib\asyncio\base_events.py", line 603, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x000001FF7FEA9FC0>
+    └ <ProactorEventLoop running=True closed=False debug=False>
+
+  File "F:\anaconda3\envs\python310\lib\asyncio\base_events.py", line 1909, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x000001FF7FE15990>
+    └ <Handle Task.task_wakeup(<Future cancelled>)>
+
+  File "F:\anaconda3\envs\python310\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle Task.task_wakeup(<Future cancelled>)>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle Task.task_wakeup(<Future cancelled>)>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle Task.task_wakeup(<Future cancelled>)>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\anyio\from_thread.py", line 259, in _call_func
+    retval = await retval_or_awaitable
+                   └ <coroutine object FastAPI.__call__ at 0x000001FF18008D60>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <function _TestClientTransport.handle_request.<locals>.send at 0x000001FF17FAF490>
+                           │      └ <function _TestClientTransport.handle_request.<locals>.receive at 0x000001FF74753D90>
+                           └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function _TestClientTransport.handle_request.<locals>.send at 0x000001FF17FAF490>
+          │    │                │      └ <function _TestClientTransport.handle_request.<locals>.receive at 0x000001FF74753D90>
+          │    │                └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x000001FF18006D70>
+          └ <fastapi.applications.FastAPI object at 0x000001FF15EDED40>
+
+> File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+          │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x000001FF1802FAC0>
+          │    │   │      └ <function _TestClientTransport.handle_request.<locals>.receive at 0x000001FF74753D90>
+          │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <app.main.SecurityMiddleware object at 0x000001FF18006D10>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x000001FF18006D70>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 189, in __call__
+    with collapse_excgroups():
+         └ <function collapse_excgroups at 0x000001FF175FE7A0>
+
+  File "F:\anaconda3\envs\python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+    │    │   │     │    │      └ <traceback object at 0x000001FF1804C080>
+    │    │   │     │    └ ExceptionGroup('unhandled errors in a TaskGroup', [TypeError("_save_annotated() got an unexpected keyword argument 'fmt'")])
+    │    │   │     └ <class 'exceptiongroup.ExceptionGroup'>
+    │    │   └ <method 'throw' of 'generator' objects>
+    │    └ <generator object collapse_excgroups at 0x000001FF1800A0A0>
+    └ <contextlib._GeneratorContextManager object at 0x000001FF18044040>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_utils.py", line 93, in collapse_excgroups
+    raise exc
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+                     │    │             │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next at 0x000001FF1802FB50>
+                     │    │             └ <starlette.middleware.base._CachedRequest object at 0x000001FF18007940>
+                     │    └ <bound method SecurityMiddleware.dispatch of <app.main.SecurityMiddleware object at 0x000001FF18006D10>>
+                     └ <app.main.SecurityMiddleware object at 0x000001FF18006D10>
+
+  File "D:\pythonPorjects\qwen_filter\app\main.py", line 54, in dispatch
+    return await call_next(request)
+                 │         └ <starlette.middleware.base._CachedRequest object at 0x000001FF18007940>
+                 └ <function BaseHTTPMiddleware.__call__.<locals>.call_next at 0x000001FF1802FB50>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 165, in call_next
+    raise app_exc
+          └ TypeError("_save_annotated() got an unexpected keyword argument 'fmt'")
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+          │    │   │      │                      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x000001FF1802FD00>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+          │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x000001FF18006AD0>
+          └ <app.main.SecurityMiddleware object at 0x000001FF18006D10>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x000001FF1802FD00>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+          │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x000001FF18006A10>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x000001FF18006AD0>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\middleware\exceptions.py", line 65, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+          │                            │    │    │     │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x000001FF1802FD00>
+          │                            │    │    │     │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+          │                            │    │    │     └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │                            │    │    └ <starlette.requests.Request object at 0x000001FF18044640>
+          │                            │    └ <fastapi.routing.APIRouter object at 0x000001FF17F48F40>
+          │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x000001FF18006A10>
+          └ <function wrap_app_handling_exceptions at 0x000001FF17685360>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF18050040>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+          │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          └ <fastapi.routing.APIRouter object at 0x000001FF17F48F40>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 756, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF18050040>
+          │    │                │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+          │    │                └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x000001FF17F48F40>>
+          └ <fastapi.routing.APIRouter object at 0x000001FF17F48F40>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 776, in app
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF18050040>
+          │     │      │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+          │     │      └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │     └ <function Route.handle at 0x000001FF176869E0>
+          └ APIRoute(path='/api/v1/detect', name='detect_image', methods=['POST'])
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 297, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF18050040>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+          │    │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │    └ <function request_response.<locals>.app at 0x000001FF17FAF640>
+          └ APIRoute(path='/api/v1/detect', name='detect_image', methods=['POST'])
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 77, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+          │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF18050040>
+          │                            │    │        │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+          │                            │    │        └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          │                            │    └ <starlette.requests.Request object at 0x000001FF18044880>
+          │                            └ <function request_response.<locals>.app.<locals>.app at 0x000001FF18050160>
+          └ <function wrap_app_handling_exceptions at 0x000001FF17685360>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x000001FF180501F0>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x000001FF1802FBE0>
+          │   └ {'type': 'http', 'http_version': '1.1', 'method': 'POST', 'path': '/api/v1/detect', 'raw_path': b'/api/v1/detect', 'root_path...
+          └ <function request_response.<locals>.app.<locals>.app at 0x000001FF18050160>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\starlette\routing.py", line 72, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x000001FF18044880>
+                     └ <function get_request_handler.<locals>.app at 0x000001FF17FAF5B0>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x000001FF1769C550>
+
+  File "F:\anaconda3\envs\python310\lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'req': DetectRequest(image_url=None, image_base64='/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofH...
+                 │         └ <function detect_image at 0x000001FF17FAD090>
+                 └ Dependant(path_params=[], query_params=[], header_params=[], cookie_params=[], body_params=[ModelField(field_info=Body(Pydant...
+
+  File "D:\pythonPorjects\qwen_filter\app\routes.py", line 213, in detect_image
+    fname, _ = _save_annotated(
+               └ <function _save_annotated at 0x000001FF17FAD120>
+
+TypeError: _save_annotated() got an unexpected keyword argument 'fmt'
+2026-09-20 15:42:06.134 | INFO     | app.main:lifespan:59 - ===== qwen-filter-service v1.0.0 启动 =====
+2026-09-20 15:42:06.135 | INFO     | app.main:lifespan:62 - 监听地址: 0.0.0.0:9070
+2026-09-20 15:42:06.135 | INFO     | app.main:lifespan:63 - 鉴权: API Key 校验已关闭
+2026-09-20 15:42:06.135 | INFO     | app.main:lifespan:64 - IP 白名单: 
+2026-09-20 15:42:06.415 | INFO     | app.qwen_client:startup:37 - QwenClient 初始化: http://127.0.0.1:9080/v1
+2026-09-20 15:42:06.420 | INFO     | app.routes:detect_image:174 - [db1f2f6c819f] 整图识别请求, url=False
+2026-09-20 15:42:08.469 | ERROR    | app.qwen_client:detect_image:186 - vLLM 识别异常 (第 1 次): All connection attempts failed
+2026-09-20 15:42:11.026 | ERROR    | app.qwen_client:detect_image:186 - vLLM 识别异常 (第 2 次): All connection attempts failed
+2026-09-20 15:42:14.082 | ERROR    | app.qwen_client:detect_image:186 - vLLM 识别异常 (第 3 次): All connection attempts failed
+2026-09-20 15:42:14.083 | ERROR    | app.qwen_client:detect_image:191 - vLLM 识别最终失败，返回空结果: All connection attempts failed
+2026-09-20 15:42:14.083 | INFO     | app.routes:detect_image:197 - [db1f2f6c819f] 识别到 0 个目标
+2026-09-20 15:42:14.087 | INFO     | app.routes:detect_image:218 - [db1f2f6c819f] 完成, 耗时 7667.0ms
+2026-09-20 15:42:14.088 | INFO     | app.main:lifespan:69 - ===== 应用关闭 =====
+2026-09-20 15:42:14.089 | INFO     | app.qwen_client:shutdown:42 - QwenClient 已关闭
