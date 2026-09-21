@@ -33,6 +33,8 @@ class FilterRequest(BaseModel):
     image_base64: str = Field(..., min_length=10, max_length=20_000_000)
     detections: List[DetectionItem] = Field(..., min_length=1, max_length=20)
     custom_prompt: Optional[str] = Field(default=None, max_length=1000)
+    # 图像来源：可见光 / 热成像。两路摄像头的误报模式完全不同，需分别定制提示词。
+    camera_type: str = Field(default="visible", pattern="^(visible|thermal)$")
 
     @field_validator("image_base64")
     @classmethod
@@ -59,6 +61,7 @@ class FilterWithImageRequest(BaseModel):
     detections: List[DetectionItem] = Field(..., min_length=1, max_length=50)
     custom_prompt: Optional[str] = Field(default=None, max_length=1000)
     image_format: str = Field(default="JPEG", pattern="^(JPEG|PNG)$")
+    camera_type: str = Field(default="visible", pattern="^(visible|thermal)$")
 
     @field_validator("image_base64")
     @classmethod
@@ -86,6 +89,7 @@ class DetectRequest(BaseModel):
     categories: Optional[List[str]] = Field(default=None, max_length=50)
     custom_prompt: Optional[str] = Field(default=None, max_length=1000)
     image_format: str = Field(default="JPEG", pattern="^(JPEG|PNG)$")
+    camera_type: str = Field(default="visible", pattern="^(visible|thermal)$")
 
     @field_validator("image_base64")
     @classmethod

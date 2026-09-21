@@ -55,8 +55,16 @@ class QwenClient:
         class_name: str,
         confidence: float,
         custom_prompt: Optional[str] = None,
+        camera_type: str = "visible",
+        scene_hint: str = "",
     ) -> Tuple[bool, str]:
-        """复核单个检测项，返回 (is_real, reason)。"""
+        """复核单个检测项，返回 (is_real, reason)。
+
+        camera_type: "visible"（可见光，默认）或 "thermal"（热成像），
+            决定使用哪一套误报知识库（颜色线索对热成像完全失效）。
+        scene_hint: 对原图（而非裁剪图）做场景分析后的补充约束，
+            用于弥补裁剪图缺失全局上下文（夜间/逆光等）的问题。
+        """
         # ===== 安全校验：自定义提示词 =====
         if custom_prompt:
             ok, err = validate_custom_prompt(custom_prompt)
@@ -65,7 +73,10 @@ class QwenClient:
                 custom_prompt = None  # 回退到默认提示词
 
         # ===== 构造提示词 =====
-        prompt = build_prompt(class_name, confidence, custom_prompt)
+        prompt = build_prompt(
+            class_name, confidence, custom_prompt,
+            camera_type=camera_type, scene_hint=scene_hint,
+        )
 
         if "," in image_base64:
             image_base64 = image_base64.split(",", 1)[1]
@@ -125,6 +136,7 @@ class QwenClient:
         categories: list[str],
         custom_prompt: Optional[str] = None,
         scene_hint: str = "",
+        camera_type: str = "visible",
     ) -> tuple[list[dict], str, bool]:
         """
         整图识别：让大模型从全图中检测指定类别的目标。
@@ -133,6 +145,7 @@ class QwenClient:
         - reason: 失败原因；成功时为空串
         - recognized: True=模型正常返回；False=调用失败（与是否检出目标无关）
         - scene_hint: 场景补充约束（如夜间/红外画面提示）
+        - camera_type: "visible" 或 "thermal"，决定是否附加热成像专用规则
         """
         # ===== 安全校验：自定义提示词 =====
         if custom_prompt:
@@ -142,7 +155,9 @@ class QwenClient:
                 custom_prompt = None  # 回退到检测模板
 
         # ===== 构造提示词 =====
-        prompt = build_detection_prompt(categories, custom_prompt, scene_hint)
+        prompt = build_detection_prompt(
+            categories, custom_prompt, scene_hint, camera_type=camera_type,
+        )
 
         if "," in image_base64:
             image_base64 = image_base64.split(",", 1)[1]

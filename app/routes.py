@@ -45,6 +45,17 @@ def _handle_detection(det) -> tuple:
 
 async def _process_detections(req, request_id: str):
     """处理所有检测项，返回 results。"""
+    # 场景分析基于原图（而非各检测项的裁剪图）算一次即可：裁剪图本身缺乏
+    # 全局上下文（是否夜间/逆光/红外画面），靠原图的整体明暗/饱和度分布补上。
+    scene_hint = ""
+    try:
+        original = decode_base64_image(req.image_base64)
+        scene_hint = analyze_scene(original)
+    except Exception as e:
+        log.warning(f"[{request_id}] 场景分析失败，跳过: {e}")
+
+    camera_type = getattr(req, "camera_type", "visible")
+
     results = []
     for det in req.detections:
         action, is_real, reason = _handle_detection(det)
@@ -55,6 +66,8 @@ async def _process_detections(req, request_id: str):
                 class_name=det.class_name,
                 confidence=det.confidence,
                 custom_prompt=req.custom_prompt,
+                camera_type=camera_type,
+                scene_hint=scene_hint,
             )
             action = "keep" if is_real else "filter"
 
@@ -198,6 +211,7 @@ async def detect_image(req: DetectRequest):
         categories=categories,
         custom_prompt=req.custom_prompt,
         scene_hint=scene_hint,
+        camera_type=getattr(req, "camera_type", "visible"),
     )
     log.info(f"[{request_id}] 识别到 {len(detections)} 个目标")
 
